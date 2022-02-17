@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.RegisterFragment">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerPasswordInputLayout"
+        android:layout_width="310dp"
+        android:layout_height="58dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerDeepIdInputLayout"
+        app:layout_constraintVertical_bias="0.100">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerPasswordInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_fields_style"
+            android:hint="@string/passwordHint" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/registerSubmitButton"
+        android:layout_width="307dp"
+        android:layout_height="50dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="@string/create_account_text"
+        android:textColor="@color/dark_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/registerPasswordInputLayout"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="@+id/registerPasswordInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerPasswordInputLayout"
+        app:layout_constraintVertical_bias="0.104" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerDeepIdInputLayout"
+        android:layout_width="310dp"
+        android:layout_height="58dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintTop_toBottomOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintVertical_bias="0.067">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerDeepIdInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_fields_style"
+            android:hint="@string/deepIdHint" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/registerNicknameInputLayout"
+        android:layout_width="310dp"
+        android:layout_height="58dp"
+        app:boxStrokeWidth="0dp"
+        app:boxStrokeWidthFocused="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.365">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/registerNicknameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_fields_style"
+            android:hint="@string/nickname_text" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageView
+        android:id="@+id/registerProfilePicturePreview"
+        android:layout_width="106dp"
+        android:layout_height="91dp"
+        android:clickable="true"
+        android:contentDescription="@string/profile_avatar_text"
+        android:focusable="true"
+        android:src="@drawable/empty_profile_picture"
+        app:layout_constraintBottom_toTopOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintEnd_toEndOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintStart_toStartOf="@+id/registerNicknameInputLayout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.903" />
+</androidx.constraintlayout.widget.ConstraintLayout>

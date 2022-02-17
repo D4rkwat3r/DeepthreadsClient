@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Deepthreads</string>
+    <string name="deepIdHint">Deep ID</string>
+    <string name="passwordHint">Пароль</string>
+    <string name="enter_text">Войти</string>
+    <string name="loading">Загрузка</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="enter_text_full">Войти в аккаунт</string>
+    <string name="create_account_text">Создать аккаунт</string>
+    <string name="nickname_text">Никнейм</string>
+    <string name="profile_avatar_text">Аватар профиля</string>
+    <string name="uploading_file">Загружаем файл на сервер, пожалуйста, подождите</string>
+    <string name="file_uploading_finished">Файл загружен</string>
+    <string name="chats_text">Чаты</string>
+    <string name="threads_text">Потоки</string>
+    <string name="wall_text">Стена</string>
+    <string name="not_in_chat">Вы не являетесь участником этого чата.</string>
+    <string name="join">Войти?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="success">Успешно</string>
+    <string name="joined_to_chat">Вошёл в чат</string>
+    <string name="left_from_chat">Покинул чат</string>
+    <string name="my_chats">Мои чаты</string>
+    <string name="last_message">%1$s: %2$s</string>
+    <string name="user_joined_to_chat">%1$s вошёл в чат</string>
+    <string name="user_left_from_chat">%1$s покинул чат</string>
+    <string name="administrative_broadcast">%1$s объявил: %2$s</string>
+    <string name="unsupported_message">Неподдерживаемое сообщение</string>
+    <string name="leave_chat">Выход из чата</string>
+    <string name="submit_leave_chat_intent">Вы хотите покинуть этот чат?</string>
+</resources>

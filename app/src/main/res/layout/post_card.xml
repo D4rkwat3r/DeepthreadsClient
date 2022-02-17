@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:layout_gravity="center"
+    android:layout_marginTop="30dp"
+    android:background="@drawable/post_card_style"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/primaryPostAuthorAvatar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/primaryPostBackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.050"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.55" />
+
+    <TextView
+        android:id="@+id/primaryPostAuthorNickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bold_cyrillic"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/primaryPostAuthorAvatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
+        app:layout_constraintStart_toEndOf="@+id/primaryPostAuthorAvatar"
+        app:layout_constraintTop_toTopOf="@+id/primaryPostAuthorAvatar"
+        app:layout_constraintVertical_bias="0.0"
+        android:textColor="@color/black" />
+
+    <ImageView
+        android:id="@+id/primaryPostBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:scaleType="fitXY"
+        android:src="@color/black" />
+
+    <ImageView
+        android:id="@+id/primaryPostCover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="61dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/primaryPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/bold_cyrillic"
+        android:gravity="center"
+        android:maxLength="15"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/primaryPostCover"
+        app:layout_constraintVertical_bias="0.500"
+        android:textColor="@color/white" />
+
+    <ImageView
+        android:id="@+id/primaryPostLikesIcon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/like_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/primaryPostCover"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/primaryPostCover"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintVertical_bias="0.935"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/primaryPostCommentsIcon"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:src="@drawable/comment_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.450"
+        app:layout_constraintStart_toEndOf="@+id/primaryPostTitle"
+        app:layout_constraintTop_toBottomOf="@+id/primaryPostCover"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintVertical_bias="0.935"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/primaryPostLikesCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/primaryPostCover"
+        app:layout_constraintHorizontal_bias="0.03"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintStart_toEndOf="@+id/primaryPostLikesIcon"
+        app:layout_constraintTop_toTopOf="@+id/primaryPostLikesIcon"
+        android:textColor="@color/white"
+        android:text="0"/>
+
+    <TextView
+        android:id="@+id/primaryPostCommentsCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/primaryPostBackground"
+        app:layout_constraintEnd_toStartOf="@+id/primaryPostCommentsIcon"
+        app:layout_constraintHorizontal_bias="2.5"
+        app:layout_constraintStart_toEndOf="@+id/primaryPostTitle"
+        app:layout_constraintTop_toBottomOf="@+id/primaryPostCover"
+        app:layout_constraintVertical_bias="0.948"
+        android:textColor="@color/white"
+        android:text="0"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

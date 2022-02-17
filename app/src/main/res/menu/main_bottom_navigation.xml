@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/wall"
+        android:title="@string/wall_text"
+        android:icon="@drawable/wall_icon"/>
+    <item
+        android:id="@+id/threads"
+        android:title="@string/threads_text"
+        android:icon="@drawable/broadcast_icon"/>
+    <item
+        android:id="@+id/chats"
+        android:title="@string/chats_text"
+        android:icon="@drawable/chat_icon"/>
+    <item
+        android:id="@+id/myChats"
+        android:title="@string/my_chats"
+        android:icon="@drawable/private_chats" />
+</menu>
