@@ -9,8 +9,9 @@ import ru.deepthreads.app.APIHolder
 import ru.deepthreads.app.R
 import ru.deepthreads.app.data.MessageType
 import ru.deepthreads.app.models.Message
-import ru.deepthreads.app.repo.AccountRepository
+import ru.deepthreads.app.repo.RuntimeRepository
 import ru.deepthreads.app.ui.activity.MessageActivity
+import ru.deepthreads.app.ui.activity.ProfileActivity
 import ru.deepthreads.app.utils.PaginatedAdapter
 import ru.deepthreads.app.ui.viewHolder.MessageViewHolder
 
@@ -31,19 +32,23 @@ class MessageListAdapter(
         return when (viewType) {
             0 -> MessageViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.message_item, parent, false),
-                ::resolveClick
+                ::resolveClick,
+                ::resolveAvatarClick
             )
             1 -> MessageViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.my_message_item, parent, false),
-                ::resolveClick
+                ::resolveClick,
+                ::resolveAvatarClick
             )
             2 -> MessageViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.system_message_item, parent, false),
-                ::resolveClick
+                ::resolveClick,
+                ::resolveAvatarClick
             )
             else -> MessageViewHolder(
                 LayoutInflater.from(parent.context).inflate(R.layout.unsupported_message_item, parent, false),
-                ::resolveClick
+                ::resolveClick,
+                ::resolveAvatarClick
             )
         }
     }
@@ -86,7 +91,7 @@ class MessageListAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if (messages[position].type == MessageType.NORMAL.numerical) {
-            if (messages[position].sender.objectId == AccountRepository.get()?.userProfile?.objectId) {
+            if (messages[position].sender.objectId == RuntimeRepository.account?.userProfile?.objectId) {
                 1
             } else {
                 0
@@ -126,6 +131,12 @@ class MessageListAdapter(
             intent.putExtra("messageId", messages[position].objectId)
             activity.startActivity(intent)
         }
+    }
+
+    private fun resolveAvatarClick(position: Int) {
+        val intent = Intent(activity, ProfileActivity::class.java)
+        intent.putExtra("userId", messages[position].sender.objectId)
+        activity.startActivity(intent)
     }
 
 }

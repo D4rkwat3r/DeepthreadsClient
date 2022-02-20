@@ -19,17 +19,14 @@
         android:theme="@style/Theme.Deepthreads2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.ProfileActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activity.MessageActivity"
             android:exported="true" />
         <activity
             android:name=".ui.activity.ChatActivity"
             android:exported="true" />
-
-        <service
-            android:name=".services.WebSocketService"
-            android:enabled="true"
-            android:exported="true" />
-
         <activity
             android:name=".ui.activity.AppActivity"
             android:exported="true" />

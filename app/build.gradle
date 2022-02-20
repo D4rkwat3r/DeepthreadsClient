@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -49,5 +48,6 @@ dependencies {
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.23'
     implementation 'com.github.razir.progressbutton:progressbutton:2.1.0'
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.google.android.gms:play-services-auth:20.1.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 }

@@ -18,7 +18,7 @@ class SocketWrapper : WebSocketListener() {
     private val pingResolver = Timer()
     private val moshi = Moshi.Builder().build()
     private val handlers = mutableListOf<(WSEvent) -> Unit>()
-    private var isAlive = false
+    var isAlive = false
 
     private fun startPingResolver() {
         pingResolver.schedule(object: TimerTask() {
@@ -62,10 +62,6 @@ class SocketWrapper : WebSocketListener() {
 
     fun deleteHandler(handlerPosition: Int) {
         handlers.removeAt(handlerPosition)
-    }
-
-    fun alive(): Boolean {
-        return isAlive
     }
 
     fun close() {

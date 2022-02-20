@@ -1,19 +1,15 @@
 package ru.deepthreads.app.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import com.bumptech.glide.Glide
 import ru.deepthreads.app.DTActivity
 import ru.deepthreads.app.R
-import ru.deepthreads.app.data.MessageType
 import ru.deepthreads.app.models.Message
-import ru.deepthreads.app.repo.AccountRepository
+import ru.deepthreads.app.repo.RuntimeRepository
 
 class MessageActivity : DTActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +23,7 @@ class MessageActivity : DTActivity() {
     }
 
     fun setup(inflater: LayoutInflater, root: FrameLayout, message: Message) {
-        val view = if (message.sender.objectId == AccountRepository.get()?.userProfile?.objectId) {
+        val view = if (message.sender.objectId == RuntimeRepository.account?.userProfile?.objectId) {
             inflater.inflate(R.layout.my_message_item, root)
         } else {
             inflater.inflate(R.layout.message_item, root)

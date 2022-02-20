@@ -3,12 +3,14 @@ package ru.deepthreads.app
 import android.app.Activity
 import android.graphics.Color
 import android.widget.Button
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.showProgress
 import com.squareup.moshi.Moshi
 import okhttp3.*
+import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.deepthreads.app.models.*
@@ -69,6 +71,14 @@ class APIHolder(private val activity: Activity, private val moshi: Moshi) {
         }
         val body = RegisterRequest(nickname, deepId, password, pictureResource)
         apiService.register(body).enqueue(ResponseCallback(activity, moshi, onLoad, button))
+    }
+
+    fun gLogin(
+        gToken: String,
+        onLoad: (AccountResponse) -> Unit
+    ) {
+        val body = GLoginRequest(gToken, System.currentTimeMillis())
+        apiService.gLogin(body).enqueue(ResponseCallback(activity, moshi, onLoad))
     }
 
     fun uploadImage(
@@ -232,15 +242,6 @@ class APIHolder(private val activity: Activity, private val moshi: Moshi) {
         apiService.getLike(postId, likeId).enqueue(ResponseCallback(activity, moshi, onLoad))
     }
 
-    fun commentPost(
-        postId: String,
-        content: String,
-        onLoad: (CommentResponse) -> Unit
-    ) {
-        val body = CommentingRequest(content)
-        apiService.commentPost(postId, body).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
     fun likePost(
         postId: String,
         onLoad: (LikeResponse) -> Unit
@@ -255,58 +256,6 @@ class APIHolder(private val activity: Activity, private val moshi: Moshi) {
         apiService.unlikePost(postId).enqueue(ResponseCallback(activity, moshi, onLoad))
     }
 
-    fun getComments(
-        postId: String,
-        skip: Int,
-        limit: Int,
-        onLoad: (CommentListResponse) -> Unit
-    ) {
-        apiService.getComments(postId, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
-    fun getComment(
-        postId: String,
-        commentId: String,
-        onLoad: (CommentResponse) -> Unit
-    ) {
-        apiService.getComment(postId, commentId).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
-    fun likeComment(
-        postId: String,
-        commentId: String,
-        onLoad: (LikeResponse) -> Unit
-    ) {
-        apiService.likeComment(postId, commentId).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
-    fun unlikeComment(
-        postId: String,
-        commentId: String,
-        onLoad: (EmptyOKResponse) -> Unit
-    ) {
-        apiService.unlikeComment(postId, commentId).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
-    fun getCommentLikes(
-        postId: String,
-        commentId: String,
-        skip: Int,
-        limit: Int,
-        onLoad: (LikeListResponse) -> Unit
-    ) {
-        apiService.getCommentLikes(postId, commentId, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
-    fun getCommentLike(
-        postId: String,
-        commentId: String,
-        likeId: String,
-        onLoad: (LikeResponse) -> Unit
-    ) {
-        apiService.getCommentLike(postId, commentId, likeId).enqueue(ResponseCallback(activity, moshi, onLoad))
-    }
-
     fun lifecycleCallback(
         activityName: String,
         activitySimpleName: String,
@@ -317,6 +266,165 @@ class APIHolder(private val activity: Activity, private val moshi: Moshi) {
             lifecycleCallbackType
         )
         apiService.lifecycleCallback(body).enqueue(ResponseCallback(activity, moshi, {}))
+    }
+
+    fun getUserPosts(
+        userId: String,
+        skip: Int,
+        limit: Int,
+        onLoad: (PostListResponse) -> Unit
+    ) {
+        apiService.getUserPosts(userId, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getMyPosts(
+        skip: Int,
+        limit: Int,
+        onLoad: (PostListResponse) -> Unit
+    ) {
+        apiService.getMyPosts(skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getSubscribers(
+        userId: String,
+        skip: Int,
+        limit: Int,
+        onLoad: (UserProfileListResponse) -> Unit
+    ) {
+        apiService.getSubscribers(userId, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getMySubscribers(
+        skip: Int,
+        limit: Int,
+        onLoad: (UserProfileListResponse) -> Unit
+    ) {
+        apiService.getMySubscribers(skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getSubscribed(
+        userId: String,
+        skip: Int,
+        limit: Int,
+        onLoad: (UserProfileListResponse) -> Unit
+    ) {
+        apiService.getSubscribed(userId, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getMySubscribed(
+        skip: Int,
+        limit: Int,
+        onLoad: (UserProfileListResponse) -> Unit
+    ) {
+        apiService.getMySubscribed(skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getBlocked(
+        onLoad: (UserProfileListResponse) -> Unit
+    ) {
+        apiService.getBlocked().enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getBlockers(
+        onLoad: (UserProfileListResponse) -> Unit
+    ) {
+        apiService.getBlockers().enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun blockUser(
+        userId: String,
+        onLoad: (EmptyOKResponse) -> Unit
+    ) {
+        apiService.blockUser(userId).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun unblockUser(
+        userId: String,
+        onLoad: (EmptyOKResponse) -> Unit
+    ) {
+        apiService.unblockUser(userId).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun subscribeUser(
+        userId: String,
+        onLoad: (EmptyOKResponse) -> Unit
+    ) {
+        apiService.subscribeUser(userId).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun unsubscribeUser(
+        userId: String,
+        onLoad: (EmptyOKResponse) -> Unit
+    ) {
+        apiService.unsubscribeUser(userId).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun createComment(
+        objectId: String,
+        type: Int,
+        content: String,
+        onLoad: (CommentResponse) -> Unit
+    ) {
+        val body = CommentingRequest(content)
+        apiService.createComment(body, objectId, type).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getComment(
+        objectId: String,
+        type: Int,
+        commentId: String,
+        onLoad: (CommentResponse) -> Unit
+    ) {
+        apiService.getComment(objectId, commentId, type).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getComments(
+        objectId: String,
+        type: Int,
+        skip: Int,
+        limit: Int,
+        onLoad: (CommentListResponse) -> Unit
+    ) {
+        apiService.getComments(objectId, type, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun likeComment(
+        objectId: String,
+        commentId: String,
+        type: Int,
+        onLoad: (LikeResponse) -> Unit
+    ) {
+        apiService.likeComment(objectId, commentId, type).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun unlikeComment(
+        objectId: String,
+        commentId: String,
+        type: Int,
+        onLoad: (EmptyOKResponse) -> Unit
+    ) {
+        apiService.unlikeComment(objectId, commentId, type).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getCommentLike(
+        objectId: String,
+        commentId: String,
+        likeId: String,
+        type: Int,
+        onLoad: (LikeResponse) -> Unit
+    ) {
+        apiService.getCommentLike(objectId, commentId, likeId, type).enqueue(ResponseCallback(activity, moshi, onLoad))
+    }
+
+    fun getCommentLikes(
+        objectId: String,
+        commentId: String,
+        type: Int,
+        skip: Int,
+        limit: Int,
+        onLoad: (LikeListResponse) -> Unit
+    ) {
+        apiService.getCommentLikes(objectId, commentId, type, skip, limit).enqueue(ResponseCallback(activity, moshi, onLoad))
     }
 
 }

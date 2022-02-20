@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.Toolbar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,14 +20,16 @@ import ru.deepthreads.app.R
 import ru.deepthreads.app.ui.adapter.MessageListAdapter
 import ru.deepthreads.app.models.Chat
 import ru.deepthreads.app.models.Message
-import ru.deepthreads.app.repo.AccountRepository
+import ru.deepthreads.app.repo.RuntimeRepository
 
 class ChatActivity : DTActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
         val chatId = intent.extras!!.getString("chatId")!!
+        val toolBar = findViewById<Toolbar>(R.id.toolBar)
         api.getChat(chatId) { chatResponse ->
+            toolBar.title = chatResponse.chat.title
             api.getMessages(chatResponse.chat.objectId, 0, 20) { messagesResponse ->
                 setupView(chatResponse.chat, messagesResponse.messageList)
             }
@@ -81,7 +84,7 @@ class ChatActivity : DTActivity() {
             0,
             content,
             0,
-            AccountRepository.get()!!.userProfile,
+            RuntimeRepository.account!!.userProfile,
             null
         )
         val position = adapter.add(pseudoMessage)

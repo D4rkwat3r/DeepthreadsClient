@@ -35,8 +35,8 @@ class PostListAdapter(
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         holder.title.text = posts[position].title
         holder.authorNickname.text = posts[position].author.nickname
-        holder.likesCount.text = posts[position].likeCount.toString()
-        holder.commentsCount.text = posts[position].commentCount.toString()
+        holder.likesCount.text = posts[position].likesCount.toString()
+        holder.commentsCount.text = posts[position].commentsCount.toString()
         holder.loadAuthorAvatar(posts[position].author.pictureUrl)
         holder.loadCover(posts[position].coverUrl)
     }
@@ -48,14 +48,14 @@ class PostListAdapter(
     private fun resolveLike(position: Int) {
         if (!posts[position].isLikedByMe) {
             api.likePost(posts[position].objectId) {
-                posts[position].likeCount++
+                posts[position].likesCount++
                 posts[position].isLikedByMe = true
                 notifyItemChanged(position)
             }
         }
         else {
             api.unlikePost(posts[position].objectId) {
-                posts[position].likeCount--
+                posts[position].likesCount--
                 posts[position].isLikedByMe = false
                 notifyItemChanged(position)
             }

@@ -8,16 +8,12 @@ import ru.deepthreads.app.ws.SocketWrapper
 open class DTActivity : AppCompatActivity() {
 
     val application: Deepthreads
-    get() = Deepthreads.getInstance()
+    get() = Deepthreads.instance
     val api: APIHolder
-    get() = application.getAPI()
+    get() = application.apiHolder
     val webSocket: SocketWrapper
-    get() = application.getWebSocket()
+    get() = application.wsChannel
     val moshi: Moshi
-    get() = application.getMoshi()
+    get() = application.moshi
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        application.apiHolder = APIHolder(this, application.getMoshi())
-        super.onCreate(savedInstanceState)
-    }
 }

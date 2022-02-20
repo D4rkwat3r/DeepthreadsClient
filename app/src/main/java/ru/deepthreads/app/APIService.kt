@@ -1,6 +1,7 @@
 package ru.deepthreads.app
 
 import okhttp3.MultipartBody
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 import ru.deepthreads.app.models.*
@@ -10,6 +11,8 @@ interface APIService {
     fun login(@Body body: LoginRequest): Call<AccountResponse>
     @POST("v1/auth/register")
     fun register(@Body body: RegisterRequest): Call<AccountResponse>
+    @POST("v1/auth/g-login")
+    fun gLogin(@Body body: GLoginRequest): Call<AccountResponse>
     @POST("v1/upload-media") @Multipart
     fun upload(@Query("extension") type: String, @Part file: MultipartBody.Part): Call<UploadFileResponse>
     @GET("v1/chats")
@@ -73,11 +76,6 @@ interface APIService {
         @Path("objectId") objectId: String,
         @Path("likeId") likeId: String
     ): Call<LikeResponse>
-    @POST("v1/wall/{objectId}/comment")
-    fun commentPost(
-        @Path("objectId") objectId: String,
-        @Body body: CommentingRequest
-    ): Call<CommentResponse>
     @POST("v1/wall/{objectId}/like")
     fun likePost(
         @Path("objectId") objectId: String
@@ -86,40 +84,105 @@ interface APIService {
     fun unlikePost(
         @Path("objectId") objectId: String
     ): Call<EmptyOKResponse>
-    @GET("v1/wall/{objectId}/comments")
+    @POST("v1/event-log/activity-lifecycle-callback")
+    fun lifecycleCallback(@Body body: EventLogRequest): Call<EmptyOKResponse>
+    @GET("v1/users/{objectId}/wall")
+    fun getUserPosts(
+        @Path("objectId") objectId: String,
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<PostListResponse>
+    @GET("v1/me/wall")
+    fun getMyPosts(
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<PostListResponse>
+    @GET("v1/{objectId}/subscribers")
+    fun getSubscribers(
+        @Path("objectId") objectId: String,
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<UserProfileListResponse>
+    @GET("v1/me/subscribers")
+    fun getMySubscribers(
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<UserProfileListResponse>
+    @GET("v1/{objectId}/subscribed")
+    fun getSubscribed(
+        @Path("objectId") objectId: String,
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<UserProfileListResponse>
+    @GET("v1/me/subscribed")
+    fun getMySubscribed(
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<UserProfileListResponse>
+    @GET("v1/blocked-full-list")
+    fun getBlocked(): Call<UserProfileListResponse>
+    @GET("v1/blockers-full-list")
+    fun getBlockers(): Call<UserProfileListResponse>
+    @POST("v1/{objectId}/block")
+    fun blockUser(
+        @Path("objectId") objectId: String
+    ): Call<EmptyOKResponse>
+    @DELETE("v1/{objectId}/block")
+    fun unblockUser(
+        @Path("objectId") objectId: String
+    ): Call<EmptyOKResponse>
+    @POST("v1/{objectId}/subscription")
+    fun subscribeUser(
+        @Path("objectId") objectId: String
+    ): Call<EmptyOKResponse>
+    @DELETE("v1/{objectId}/subscription")
+    fun unsubscribeUser(
+        @Path("objectId") objectId: String
+    ): Call<EmptyOKResponse>
+    @POST("v1/comments/{objectId}")
+    fun createComment(
+        @Body body: CommentingRequest,
+        @Path("objectId") objectId: String,
+        @Query("type") type: Int
+    ): Call<CommentResponse>
+    @GET("v1/comments/{objectId}/{commentId}")
+    fun getComment(
+        @Path("objectId") objectId: String,
+        @Path("commentId") commentId: String,
+        @Query("type") type: Int
+    ): Call<CommentResponse>
+    @GET("v1/comments/{objectId}")
     fun getComments(
         @Path("objectId") objectId: String,
+        @Query("type") type: Int,
         @Query("skip") skip: Int,
         @Query("limit") limit: Int
     ): Call<CommentListResponse>
-    @GET("v1/wall/{objectId}/comments/{commentId}")
-    fun getComment(
-        @Path("objectId") objectId: String,
-        @Path("commentId") commentId: String
-    ): Call<CommentResponse>
-    @POST("v1/wall/{objectId}/comments/{commentId}/like")
+    @POST("v1/comments/{objectId}/{commentId}/like")
     fun likeComment(
         @Path("objectId") objectId: String,
-        @Path("commentId") commentId: String
+        @Path("commentId") commentId: String,
+        @Query("type") type: Int
     ): Call<LikeResponse>
-    @DELETE("v1/wall/{objectId}/comments/{commentId}/like")
+    @DELETE("v1/comments/{objectId}/{commentId}/like")
     fun unlikeComment(
         @Path("objectId") objectId: String,
-        @Path("commentId") commentId: String
-    ): Call<EmptyOKResponse>
-    @GET("v1/wall/{objectId}/comments/{commentId}/likes")
-    fun getCommentLikes(
-        @Path("objectId") objectId: String,
         @Path("commentId") commentId: String,
-        @Query("skip") skip: Int,
-        @Query("limit") limit: Int
-    ): Call<LikeListResponse>
-    @GET("v1/wall/{objectId}/comments/{commentId}/likes/{likeId}")
+        @Query("type") type: Int
+    ): Call<EmptyOKResponse>
+    @GET("v1/comments/{objectId}/{commentId}/likes/{likeId}")
     fun getCommentLike(
         @Path("objectId") objectId: String,
         @Path("commentId") commentId: String,
-        @Path("likeId") likeId: String
+        @Path("likeId") likeId: String,
+        @Query("type") type: Int
     ): Call<LikeResponse>
-    @POST("v1/event-log/activity-lifecycle-callback")
-    fun lifecycleCallback(@Body body: EventLogRequest): Call<EmptyOKResponse>
+    @GET("v1/comments/{objectId}/{commentId}/likes")
+    fun getCommentLikes(
+        @Path("objectId") objectId: String,
+        @Path("commentId") commentId: String,
+        @Query("type") type: Int,
+        @Query("skip") skip: Int,
+        @Query("limit") limit: Int
+    ): Call<LikeListResponse>
 }

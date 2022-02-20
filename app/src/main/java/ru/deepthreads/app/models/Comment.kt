@@ -7,6 +7,6 @@ data class Comment(
     val createdTime: Long,
     val author: UserProfile,
     val content: String,
-    var likeCount: Int,
+    var likesCount: Int,
     var isLikedByMe: Boolean
 )

@@ -30,4 +30,12 @@
     <string name="unsupported_message">Неподдерживаемое сообщение</string>
     <string name="leave_chat">Выход из чата</string>
     <string name="submit_leave_chat_intent">Вы хотите покинуть этот чат?</string>
+    <string name="chat_name">Название чата</string>
+    <string name="create">Создать</string>
+    <string name="create_chat">Создать чат</string>
+    <string name="chat_icon">Иконка чата</string>
+    <string name="chat_background">Фоновое изображение чата</string>
+    <string name="publications">Публикации</string>
+    <string name="comments">Комментарии</string>
+    <string name="subscribers_count">%1$d подписчиков</string>
 </resources>

@@ -3,13 +3,15 @@ package ru.deepthreads.app.utils
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
+import ru.deepthreads.app.APIHolder
 import ru.deepthreads.app.Deepthreads
-import ru.deepthreads.app.repo.AccountRepository
+import ru.deepthreads.app.repo.RuntimeRepository
 
 class DeepthreadsLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
 
     override fun onActivityCreated(p0: Activity, p1: Bundle?) {
-        Deepthreads.getInstance().getAPI().lifecycleCallback(
+        Deepthreads.instance.apiHolder = APIHolder(p0, Deepthreads.instance.moshi)
+        Deepthreads.instance.apiHolder.lifecycleCallback(
             p0::class.java.name,
             p0::class.java.simpleName,
             "onActivityCreated",
@@ -17,7 +19,8 @@ class DeepthreadsLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityStarted(p0: Activity) {
-        Deepthreads.getInstance().getAPI().lifecycleCallback(
+        Deepthreads.instance.apiHolder = APIHolder(p0, Deepthreads.instance.moshi)
+        Deepthreads.instance.apiHolder.lifecycleCallback(
             p0::class.java.name,
             p0::class.java.simpleName,
             "onActivityStarted",
@@ -25,16 +28,17 @@ class DeepthreadsLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
     }
 
     override fun onActivityResumed(p0: Activity) {
-        if (AccountRepository.get() != null) {
+        Deepthreads.instance.apiHolder = APIHolder(p0, Deepthreads.instance.moshi)
+        if (RuntimeRepository.account != null) {
             try {
-                if (!Deepthreads.getInstance().wsChannel.alive()) {
-                    Deepthreads.getInstance().connect()
+                if (!Deepthreads.instance.wsChannel.isAlive) {
+                    Deepthreads.instance.connect()
                 }
             } catch (e: RuntimeException) {
-                Deepthreads.getInstance().connect()
+                Deepthreads.instance.connect()
             }
         }
-        Deepthreads.getInstance().getAPI().lifecycleCallback(
+        Deepthreads.instance.apiHolder.lifecycleCallback(
             p0::class.java.name,
             p0::class.java.simpleName,
             "onActivityResumed",

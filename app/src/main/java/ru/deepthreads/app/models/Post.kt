@@ -9,7 +9,7 @@ data class Post(
     val content: String,
     val coverUrl: String,
     val backgroundUrl: String,
-    var likeCount: Int,
-    var commentCount: Int,
+    var likesCount: Int,
+    var commentsCount: Int,
     var isLikedByMe: Boolean
 )

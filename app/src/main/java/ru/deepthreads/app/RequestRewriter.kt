@@ -4,7 +4,7 @@ import android.os.Build
 import okhttp3.*
 import okio.Buffer
 import ru.deepthreads.app.dts.DTSFeature
-import ru.deepthreads.app.repo.AccountRepository
+import ru.deepthreads.app.repo.RuntimeRepository
 import java.lang.StringBuilder
 import java.util.*
 
@@ -45,8 +45,8 @@ class RequestRewriter : Interceptor {
                                 .addHeader("DTSTime", System.currentTimeMillis().toString())
                                 .addHeader("DTSNonce", nonce)
                                 .addHeader("DTSContext", DTSFeature.ContextSignature.generateNew(request, nonce))
-        if (AccountRepository.get() != null) {
-            changedRequest.addHeader("AuthToken", AccountRepository.get()!!.authToken)
+        if (RuntimeRepository.account != null) {
+            changedRequest.addHeader("AuthToken", RuntimeRepository.account!!.authToken)
         }
         return changedRequest.build()
     }

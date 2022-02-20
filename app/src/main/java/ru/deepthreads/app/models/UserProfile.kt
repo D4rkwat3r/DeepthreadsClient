@@ -1,10 +1,13 @@
 package ru.deepthreads.app.models
 
 data class UserProfile(
+    val objectId: String,
+    val createdTime: Long,
+    val status: Int,
     val nickname: String,
     val deepId: String,
-    val objectId: String,
     val pictureUrl: String,
-    val profileCreatedTime: Long,
-    val status: Int
+    val subscribersCount: Int,
+    val commentsCount: Int,
+    val role: Int
 )

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.activity.AuthActivity"
     android:orientation="vertical"
-    android:background="@drawable/fog">
+    android:id="@+id/root">
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/authViewPager"

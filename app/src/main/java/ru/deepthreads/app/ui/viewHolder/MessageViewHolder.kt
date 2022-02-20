@@ -10,7 +10,8 @@ import ru.deepthreads.app.R
 
 class MessageViewHolder(
     private val itemView: View,
-    private val onClickListener: (Int) -> Unit
+    private val onClickListener: (Int) -> Unit,
+    private val onAvatarClickListener: (Int) -> Unit
 ) : RecyclerView.ViewHolder(itemView) {
     val messageText: TextView = itemView.findViewById(R.id.messageTextContent)
     private val sendingProgressBar: ProgressBar? = itemView.findViewById(R.id.messageSendingProgressBar)
@@ -18,6 +19,7 @@ class MessageViewHolder(
 
     init {
         itemView.setOnClickListener { onClickListener(adapterPosition) }
+        authorPicture?.setOnClickListener { onAvatarClickListener(adapterPosition) }
     }
 
     fun loadAuthorAvatar(url: String) {

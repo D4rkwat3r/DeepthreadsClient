@@ -64,4 +64,9 @@ class ChatListAdapter(
         }
     }
 
+    fun add(chat: Chat) {
+        chats.add(chat)
+        notifyItemInserted(chats.indexOf(chat))
+    }
+
 }

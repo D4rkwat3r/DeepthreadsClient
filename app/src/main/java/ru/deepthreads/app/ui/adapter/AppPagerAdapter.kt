@@ -1,5 +1,6 @@
 package ru.deepthreads.app.ui.adapter
 
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
@@ -19,6 +20,10 @@ class AppPagerAdapter(
     private val chats = ChatsFragment()
     private val myChats = MyChatsFragment()
     private val other = Fragment()
+
+    init {
+        wall.arguments = bundleOf("isUser" to false)
+    }
 
     override fun getItemCount(): Int {
         return 4
