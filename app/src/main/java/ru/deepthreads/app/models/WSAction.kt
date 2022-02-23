@@ -1,6 +1,6 @@
 package ru.deepthreads.app.models
 
-data class WSAction(
+data class WSAction <T> (
     val actionType: Int,
-    val payload: String?
+    val payload: T? = null
 )

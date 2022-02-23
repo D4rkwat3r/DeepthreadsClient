@@ -18,6 +18,11 @@ class MyChatsFragment : DTFragment<AppActivity>(R.layout.fragment_my_chats) {
             val adapter = MyChatListAdapter(activity, response.chatList.toMutableList(), api, recyclerView)
             recyclerView.adapter = adapter
             find<ProgressBar>(R.id.loadingProgressBar).visibility = View.GONE
+            listen("add") { data ->
+                api.getChat(data.getString("id") ?: return@listen) { response ->
+                    adapter.add(response.chat)
+                }
+            }
         }
     }
 }

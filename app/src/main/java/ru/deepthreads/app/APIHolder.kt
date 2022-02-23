@@ -3,22 +3,20 @@ package ru.deepthreads.app
 import android.app.Activity
 import android.graphics.Color
 import android.widget.Button
-import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import com.github.razir.progressbutton.attachTextChangeAnimator
 import com.github.razir.progressbutton.bindProgressButton
 import com.github.razir.progressbutton.showProgress
 import com.squareup.moshi.Moshi
 import okhttp3.*
-import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.deepthreads.app.models.*
-import ru.deepthreads.app.utils.ResponseCallback
+import ru.deepthreads.app.util.ResponseCallback
 import java.io.File
 
 class APIHolder(private val activity: Activity, private val moshi: Moshi) {
-    private val httpClient = OkHttpClient.Builder()
+    val client = OkHttpClient.Builder()
                     .addInterceptor(RequestRewriter())
                     .protocols(listOf(Protocol.HTTP_1_1, Protocol.HTTP_2))
                     .followRedirects(false)
@@ -27,13 +25,9 @@ class APIHolder(private val activity: Activity, private val moshi: Moshi) {
     private val retrofit = Retrofit.Builder()
         .baseUrl("http://deepthreads.ru/api/")
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .client(httpClient)
+        .client(client)
         .build()
     private val apiService = retrofit.create(APIService::class.java)
-
-    fun getClient(): OkHttpClient {
-        return httpClient
-    }
 
     fun login(
         deepId: String,

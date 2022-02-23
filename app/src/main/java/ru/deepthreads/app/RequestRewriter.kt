@@ -41,7 +41,7 @@ class RequestRewriter : Interceptor {
     private fun rewriteHeaders(request: Request, nonce: String): Request {
         val changedRequest = request.newBuilder()
                                 .addHeader("User-Agent", createUserAgent())
-                                .addHeader("Android-Agent", System.getProperty("http.agent")!!)
+                                .addHeader("Android-Agent", System.getProperty("http.agent") ?: "Unknown")
                                 .addHeader("DTSTime", System.currentTimeMillis().toString())
                                 .addHeader("DTSNonce", nonce)
                                 .addHeader("DTSContext", DTSFeature.ContextSignature.generateNew(request, nonce))

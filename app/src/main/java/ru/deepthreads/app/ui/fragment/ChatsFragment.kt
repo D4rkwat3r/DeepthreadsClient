@@ -19,6 +19,7 @@ class ChatsFragment : DTFragment<AppActivity>(R.layout.fragment_chats) {
         recyclerView.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
         api.loadChatList(1, 0, 20) { response ->
             val adapter = ChatListAdapter(
+                this,
                 activity,
                 response.chatList.toMutableList(),
                 api,

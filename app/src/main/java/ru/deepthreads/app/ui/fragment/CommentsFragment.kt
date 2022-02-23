@@ -19,7 +19,7 @@ class CommentsFragment : DTFragment<AppActivity>(R.layout.fragment_comments) {
         api.getComments(parentId, parentType, 0, 30, ::setupRecyclerView)
     }
 
-    fun setupRecyclerView(response: CommentListResponse) {
+    private fun setupRecyclerView(response: CommentListResponse) {
         val adapter = CommentListAdapter(
             activity,
             parentType,

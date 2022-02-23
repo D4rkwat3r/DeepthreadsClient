@@ -5,15 +5,18 @@ import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import ru.deepthreads.app.APIHolder
 import ru.deepthreads.app.R
 import ru.deepthreads.app.ui.activity.ChatActivity
 import ru.deepthreads.app.models.Chat
-import ru.deepthreads.app.utils.PaginatedAdapter
+import ru.deepthreads.app.ui.fragment.ChatsFragment
+import ru.deepthreads.app.util.PaginatedAdapter
 import ru.deepthreads.app.ui.viewHolder.ChatViewHolder
 
 class ChatListAdapter(
+    private val fragment: ChatsFragment,
     private val activity: Activity,
     private val chats: MutableList<Chat>,
     private val api: APIHolder,
@@ -52,6 +55,7 @@ class ChatListAdapter(
                         chats[position].meInChat = true
                         notifyItemChanged(position)
                         dialog.dismiss()
+                        fragment.broadcast("add", bundleOf("id" to chats[position].objectId))
                         ChatActivity.launch(activity, chats[position].objectId)
                     }
                 }

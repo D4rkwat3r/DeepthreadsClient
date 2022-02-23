@@ -8,7 +8,7 @@ import ru.deepthreads.app.APIHolder
 import ru.deepthreads.app.R
 import ru.deepthreads.app.models.Comment
 import ru.deepthreads.app.ui.viewHolder.CommentViewHolder
-import ru.deepthreads.app.utils.PaginatedAdapter
+import ru.deepthreads.app.util.PaginatedAdapter
 
 class CommentListAdapter(
     private val activity: Activity,

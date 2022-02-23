@@ -2,24 +2,20 @@ package ru.deepthreads.app.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.view.View
-import android.widget.ProgressBar
 import android.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.squareup.moshi.Types
 import ru.deepthreads.app.DTActivity
 import ru.deepthreads.app.R
+import ru.deepthreads.app.data.WSRecvType
 import ru.deepthreads.app.ui.adapter.MessageListAdapter
 import ru.deepthreads.app.models.Chat
 import ru.deepthreads.app.models.Message
+import ru.deepthreads.app.models.WSEvent
 import ru.deepthreads.app.repo.RuntimeRepository
 
 class ChatActivity : DTActivity() {
@@ -31,28 +27,41 @@ class ChatActivity : DTActivity() {
         api.getChat(chatId) { chatResponse ->
             toolBar.title = chatResponse.chat.title
             api.getMessages(chatResponse.chat.objectId, 0, 20) { messagesResponse ->
-                setupView(chatResponse.chat, messagesResponse.messageList)
+                setupChat(chatResponse.chat, messagesResponse.messageList)
             }
         }
     }
 
-    fun setupView(chat: Chat, messages: List<Message>) {
-        val root = findViewById<ConstraintLayout>(R.id.chatActivityLayoutRoot)
-        Glide.with(applicationContext)
-            .load(chat.backgroundUrl)
-            .into(object: CustomTarget<Drawable>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
-                    root.background = resource
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {}
-            })
+    fun setupChat(chat: Chat, messages: List<Message>) {
+        loadBackground(chat.backgroundUrl ?: "http://static.deepthreads.ru/cbg.jpg")
         val recyclerView = findViewById<RecyclerView>(R.id.chatMessagesRecyclerView)
-        val layoutManager = LinearLayoutManager(this)
         val inputLayout = findViewById<TextInputLayout>(R.id.messageInputLayout)
         val inputField = findViewById<TextInputEditText>(R.id.chatMessageInputField)
+        val adapter = setupRecyclerView(chat, messages, recyclerView)
+        inputLayout.setEndIconOnClickListener {
+            val textContent = inputField.text.toString()
+            if (textContent.isEmpty())
+                return@setEndIconOnClickListener
+            inputField.setText(String())
+            messageSendingAttempt(adapter, chat.objectId, textContent)
+        }
+        inputLayout.setOnClickListener { adapter.scrollToLastMessage() }
+        if (adapter.messages.isNotEmpty())
+            adapter.scrollToLastMessage()
+        eventSocket.registerListener(
+            this,
+            WSRecvType.MESSAGE.numerical,
+            moshi.adapter<WSEvent<Message>>(Types.newParameterizedType(WSEvent::class.java, Message::class.java))
+        ) { event ->
+            if (event.payload?.sender?.objectId != RuntimeRepository.account?.userProfile?.objectId
+                && event.eventSource == chat.objectId) {
+                adapter.add(event.payload ?: return@registerListener)
+            }
+        }
+    }
+
+    fun setupRecyclerView(chat: Chat, messages: List<Message>, recyclerView: RecyclerView): MessageListAdapter {
+        val layoutManager = LinearLayoutManager(this)
         layoutManager.reverseLayout = true
         layoutManager.stackFromEnd = true
         recyclerView.layoutManager = layoutManager
@@ -64,17 +73,7 @@ class ChatActivity : DTActivity() {
             recyclerView
         )
         recyclerView.adapter = adapter
-        inputLayout.setEndIconOnClickListener {
-            val textContent = inputField.text.toString()
-            if (textContent.isEmpty())
-                return@setEndIconOnClickListener
-            inputField.setText(String())
-            messageSendingAttempt(adapter, chat.objectId, textContent)
-        }
-        inputLayout.setOnClickListener { adapter.scrollToLastMessage() }
-        if (adapter.messages.isNotEmpty())
-            adapter.scrollToLastMessage()
-        findViewById<ProgressBar>(R.id.loadingProgressBar).visibility = View.GONE
+        return adapter
     }
 
     fun messageSendingAttempt(adapter: MessageListAdapter, chatId: String, content: String) {

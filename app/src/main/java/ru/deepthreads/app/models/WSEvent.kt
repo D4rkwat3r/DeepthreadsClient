@@ -1,7 +1,7 @@
 package ru.deepthreads.app.models
 
-data class WSEvent(
+data class WSEvent <T> (
     val eventType: Int,
-    val payload: Any?,
+    val payload: T?,
     val eventSource: String?
 )

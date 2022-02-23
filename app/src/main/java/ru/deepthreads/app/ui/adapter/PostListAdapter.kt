@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.deepthreads.app.APIHolder
 import ru.deepthreads.app.R
 import ru.deepthreads.app.models.Post
-import ru.deepthreads.app.utils.PaginatedAdapter
+import ru.deepthreads.app.util.PaginatedAdapter
 import ru.deepthreads.app.ui.viewHolder.PostViewHolder
 
 class PostListAdapter(

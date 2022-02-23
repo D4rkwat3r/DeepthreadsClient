@@ -11,7 +11,7 @@ import ru.deepthreads.app.R
 import ru.deepthreads.app.ui.activity.ChatActivity
 import ru.deepthreads.app.data.MessageType
 import ru.deepthreads.app.models.Chat
-import ru.deepthreads.app.utils.PaginatedAdapter
+import ru.deepthreads.app.util.PaginatedAdapter
 import ru.deepthreads.app.ui.viewHolder.HorizontalChatViewHolder
 
 class MyChatListAdapter(
@@ -99,4 +99,10 @@ class MyChatListAdapter(
             .show()
         return true
     }
+
+    fun add(chat: Chat) {
+        chats += chat
+        notifyItemInserted(chats.indexOf(chat))
+    }
+
 }

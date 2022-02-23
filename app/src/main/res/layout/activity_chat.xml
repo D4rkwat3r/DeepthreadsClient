@@ -1,35 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/chatActivityLayoutRoot"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ChatActivity">
+    tools:context=".ui.activity.ChatActivity"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:visibility="gone"/>
 
     <Toolbar
         android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#B7000000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:titleTextColor="@color/white"/>
+        android:titleTextColor="@color/white"
+        android:layout_gravity="top" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatMessagesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:listitem="@layout/message_item"
+        android:foregroundGravity="center"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:focusable="true"
         android:clickable="true"
         android:id="@+id/messageInputLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
         app:endIconDrawable="@drawable/send_icon"
-        app:endIconMode="custom"
-        android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_margin="20dp"
+        android:gravity="center|top"
+        app:endIconMode="custom">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/chatMessageInputField"
@@ -37,27 +48,4 @@
             android:layout_height="match_parent"
             android:background="@drawable/input_fields_style" />
     </com.google.android.material.textfield.TextInputLayout>
-
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        app:layout_constraintBottom_toTopOf="@+id/messageInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatMessagesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        app:layout_constraintBottom_toTopOf="@+id/messageInputLayout"
-        app:layout_constraintTop_toTopOf="@id/toolBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="75dp"
-        tools:listitem="@layout/message_item"
-        android:foregroundGravity="center"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

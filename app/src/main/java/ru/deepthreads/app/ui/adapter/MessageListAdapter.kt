@@ -12,7 +12,7 @@ import ru.deepthreads.app.models.Message
 import ru.deepthreads.app.repo.RuntimeRepository
 import ru.deepthreads.app.ui.activity.MessageActivity
 import ru.deepthreads.app.ui.activity.ProfileActivity
-import ru.deepthreads.app.utils.PaginatedAdapter
+import ru.deepthreads.app.util.PaginatedAdapter
 import ru.deepthreads.app.ui.viewHolder.MessageViewHolder
 
 class MessageListAdapter(

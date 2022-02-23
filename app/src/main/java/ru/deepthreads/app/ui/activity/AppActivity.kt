@@ -1,12 +1,7 @@
 package ru.deepthreads.app.ui.activity
 
-import android.graphics.drawable.Drawable
 import android.os.Bundle
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.viewpager2.widget.ViewPager2
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.deepthreads.app.DTActivity
 import ru.deepthreads.app.R
@@ -17,18 +12,7 @@ class AppActivity : DTActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app)
-        val root = findViewById<ConstraintLayout>(R.id.root)
-        Glide.with(this)
-            .load("http://static.deepthreads.ru/bg2.jpg")
-            .into(object: CustomTarget<Drawable>() {
-                override fun onResourceReady(
-                    resource: Drawable,
-                    transition: Transition<in Drawable>?
-                ) {
-                    root.background = resource
-                }
-                override fun onLoadCleared(placeholder: Drawable?) {}
-            })
+        loadBackground("http://static.deepthreads.ru/bg2.jpg")
         val nav = findViewById<BottomNavigationView>(R.id.mainBottomNavigation)
         val viewPager = findViewById<ViewPager2>(R.id.appViewPager)
         viewPager.adapter = AppPagerAdapter(supportFragmentManager, lifecycle)

@@ -23,7 +23,7 @@ public class DTSFeature {
         public static String generateNew(@NonNull Request request, @NonNull String nonce) throws GeneralSecurityException, IOException {
             String path = relativePath(request.url().toString());
             Mac mac = Mac.getInstance("HmacSHA1");
-            mac.init(new SecretKeySpec(Objects.requireNonNull(nonce).getBytes(StandardCharsets.UTF_8), "HmacSHA1"));
+            mac.init(new SecretKeySpec("tempkey".getBytes(StandardCharsets.UTF_8), "HmacSHA1"));
             mac.update(path.getBytes(StandardCharsets.UTF_8));
             byte[] result = mac.doFinal();
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

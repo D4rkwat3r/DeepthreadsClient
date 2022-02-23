@@ -65,7 +65,7 @@ interface APIService {
     fun createPost(@Body body: PostCreatingRequest): Call<PostResponse>
     @GET("v1/wall/{objectId}")
     fun getPost(@Path("objectId") objectId: String): Call<PostResponse>
-    @GET("av1/wall/{objectId}/likes")
+    @GET("v1/wall/{objectId}/likes")
     fun getLikes(
         @Path("objectId") objectId: String,
         @Query("skip") skip: Int,
@@ -131,11 +131,11 @@ interface APIService {
     fun unblockUser(
         @Path("objectId") objectId: String
     ): Call<EmptyOKResponse>
-    @POST("v1/{objectId}/subscription")
+    @POST("v1/users/{objectId}/subscription")
     fun subscribeUser(
         @Path("objectId") objectId: String
     ): Call<EmptyOKResponse>
-    @DELETE("v1/{objectId}/subscription")
+    @DELETE("v1/users/{objectId}/subscription")
     fun unsubscribeUser(
         @Path("objectId") objectId: String
     ): Call<EmptyOKResponse>
